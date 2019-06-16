@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190605103729_added_model_brand_category.cs" />
+    <Compile Remove="Migrations\20190605103729_added_model_brand_category.Designer.cs" />
+    <Compile Remove="Migrations\20190605164026_added_ad_and_fuel_tables.cs" />
+    <Compile Remove="Migrations\20190605164026_added_ad_and_fuel_tables.Designer.cs" />
+    <Compile Remove="Migrations\20190605164734_added_ad_carbody_fuel.cs" />
+    <Compile Remove="Migrations\20190605164734_added_ad_carbody_fuel.Designer.cs" />
+    <Compile Remove="Migrations\20190605164935_added_ad_carbody_fuel.cs" />
+    <Compile Remove="Migrations\20190605164935_added_ad_carbody_fuel.Designer.cs" />
+    <Compile Remove="Migrations\20190605170900_fixed_table_image.cs" />
+    <Compile Remove="Migrations\20190605170900_fixed_table_image.Designer.cs" />
+    <Compile Remove="Migrations\20190605171159_fixed_table_image.cs" />
+    <Compile Remove="Migrations\20190605171159_fixed_table_image.Designer.cs" />
+    <Compile Remove="Migrations\20190605171526_fixed_table_image.cs" />
+    <Compile Remove="Migrations\20190605171526_fixed_table_image.Designer.cs" />
+    <Compile Remove="Migrations\20190605171650_image_table_1.cs" />
+    <Compile Remove="Migrations\20190605171650_image_table_1.Designer.cs" />
+    <Compile Remove="Migrations\20190605172700_added_image_table2.cs" />
+    <Compile Remove="Migrations\20190605172700_added_image_table2.Designer.cs" />
+    <Compile Remove="Migrations\20190605183234_bug-fixed.cs" />
+    <Compile Remove="Migrations\20190605183234_bug-fixed.Designer.cs" />
+    <Compile Remove="Migrations\20190606073918_added_user.cs" />
+    <Compile Remove="Migrations\20190606073918_added_user.Designer.cs" />
+    <Compile Remove="Migrations\20190606080750_added_careq.cs" />
+    <Compile Remove="Migrations\20190606080750_added_careq.Designer.cs" />
+    <Compile Remove="Migrations\20190606082908_+_+.cs" />
+    <Compile Remove="Migrations\20190606082908_+_+.Designer.cs" />
+    <Compile Remove="Migrations\20190606083107_+_+.cs" />
+    <Compile Remove="Migrations\20190606083107_+_+.Designer.cs" />
+    <Compile Remove="Migrations\20190606083400_+_+.cs" />
+    <Compile Remove="Migrations\20190606083400_+_+.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>
