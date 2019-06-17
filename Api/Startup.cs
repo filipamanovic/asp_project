@@ -6,10 +6,12 @@ using Application.Commands.Brand;
 using Application.Commands.CarBody;
 using Application.Commands.Category;
 using Application.Commands.Fuel;
+using Application.Commands.User;
 using EF_Commands.EF_Brand;
 using EF_Commands.EF_CarBody;
 using EF_Commands.EF_Category;
 using EF_Commands.EF_Fuel;
+using EF_Commands.User;
 using EF_DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +58,12 @@ namespace Api
             services.AddTransient<IEditCarBodyCommand, EF_EditCarBodyCommand>();
             //Brands
             services.AddTransient<IAddBrandCommand, EF_AddBrandCommand>();
+            services.AddTransient<IGetBrandsCommand, EF_GetBrandsCommand>();
+            services.AddTransient<IGetBrandCommand, EF_GetBrandCommand>();
+            services.AddTransient<IDeleteBrandCommand, EF_DeleteBrandCommand>();
+            services.AddTransient<IEditBrandCommand, EF_EditBrandCommand>();
+            //Users
+            services.AddTransient<IAddUserCommand, EF_AddUserCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

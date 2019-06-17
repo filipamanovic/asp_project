@@ -1,0 +1,56 @@
+﻿using Application.Commands.Brand;
+using Application.Dto;
+using Application.Exceptions;
+using EF_DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace EF_Commands.EF_Brand
+{
+    public class EF_EditBrandCommand : EF_BaseEntity, IEditBrandCommand
+    {
+        public EF_EditBrandCommand(asp_projectContext context) : base(context)
+        {
+        }
+
+        public void Execute(BrandDto request)
+        {
+            var brand = Context.Brands.Find(request.Id);
+            if (brand == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            if (brand.IsDeleted == true)
+            {
+                throw new EntityAlreadyDeletedException();
+            }
+            if (brand.Name != request.Name)
+            {
+                if (Context.Fuels.Any(f => f.Name == request.Name))
+                {
+                    throw new EntityAlreadyExistException();
+                }
+            }
+            if(request.Name != null)
+            {
+                brand.Name = request.Name;
+            }
+            if (request.State != null)
+            {
+                brand.State = request.State;
+            }
+            if (request.City != null)
+            {
+                brand.City = request.City;
+            }
+            if (request.LogoUrl != null)
+            {
+                brand.Logo = request.LogoUrl;
+            }
+            brand.ModifiedAt = DateTime.Now;
+            Context.SaveChanges();
+        }
+    }
+}

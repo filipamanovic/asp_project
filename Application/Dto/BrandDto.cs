@@ -7,6 +7,7 @@ namespace Application.Dto
 {
     public class BrandDto
     {
+        public int Id { get; set; }
         [RegularExpression(@"^[a-zA-Z''-'+\s\d]{2,30}$",
          ErrorMessage = "Brand name format is not allowed.")]
         public string Name { get; set; }

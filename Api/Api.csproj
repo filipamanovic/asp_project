@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\EF_Commands\EF_Commands.csproj" />
     <ProjectReference Include="..\EF_DataAccess\EF_DataAccess.csproj" />
   </ItemGroup>

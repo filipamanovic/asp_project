@@ -9,5 +9,6 @@ namespace Application.Searches
         public string NameKeyword { get; set; }
         public string StateKeyWord { get; set; }
         public string CityKeyWord { get; set; }
+        public bool? IsActive { get; set; }
     }
 }
