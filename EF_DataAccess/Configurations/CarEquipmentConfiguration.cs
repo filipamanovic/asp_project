@@ -13,7 +13,6 @@ namespace EF_DataAccess.Configurations
         {
             builder.Property(c => c.EquipmentName).IsRequired().HasMaxLength(50);
             builder.HasIndex(c => c.EquipmentName).IsUnique();
-            builder.Property(c => c.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.HasMany(c => c.CarEquipmentAds)
                 .WithOne(ce => ce.CarEquipment)
                 .HasForeignKey(ce => ce.CarEquipmentId)

@@ -49,7 +49,6 @@ namespace EF_Commands.EF_Brand
             {
                 brand.Logo = request.LogoUrl;
             }
-            brand.ModifiedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

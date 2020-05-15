@@ -22,6 +22,7 @@ namespace EF_Commands.EF_CarBody
                 throw new EntityAlreadyDeletedException();
             }
             carbody.IsDeleted = true;
+            carbody.DeletedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

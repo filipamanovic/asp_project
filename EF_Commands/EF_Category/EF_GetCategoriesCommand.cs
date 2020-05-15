@@ -23,7 +23,7 @@ namespace EF_Commands.EF_Category
             {
                 query = query.Where(c => c.IsDeleted != request.IsActive);
             }
-            return query.Select(c => new CategoryDto
+            return query.Where(c => !c.IsDeleted).Select(c => new CategoryDto
             {
                 Id = c.Id,
                 Name = c.Name

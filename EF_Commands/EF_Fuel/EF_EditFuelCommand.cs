@@ -31,7 +31,6 @@ namespace EF_Commands.EF_Fuel
                 }
             }
             fuel.Name = request.Name;
-            fuel.ModifiedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

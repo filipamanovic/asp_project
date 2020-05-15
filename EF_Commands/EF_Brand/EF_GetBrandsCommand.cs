@@ -39,8 +39,9 @@ namespace EF_Commands.EF_Brand
                 query = query.Where(b => b.IsDeleted != request.IsActive);
             }
 
-            return query.Select(b => new BrandDto
+            return query.Where(b => !b.IsDeleted).Select(b => new BrandDto
             {
+                Id = b.Id,
                 Name = b.Name,
                 State = b.State,
                 City = b.City,

@@ -40,9 +40,9 @@ namespace EF_DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(40);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<int>("EnginePower");
 
@@ -89,9 +89,9 @@ namespace EF_DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -121,9 +121,9 @@ namespace EF_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -147,9 +147,9 @@ namespace EF_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<string>("EquipmentName")
                         .IsRequired()
@@ -186,9 +186,9 @@ namespace EF_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -212,9 +212,9 @@ namespace EF_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -242,9 +242,9 @@ namespace EF_DataAccess.Migrations
 
                     b.Property<string>("Alt");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -272,9 +272,9 @@ namespace EF_DataAccess.Migrations
 
                     b.Property<int>("BrandId");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<bool>("IsDeleted");
 
@@ -300,9 +300,9 @@ namespace EF_DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
 
                     b.Property<string>("Email")
                         .IsRequired()

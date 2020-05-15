@@ -12,7 +12,6 @@ namespace EF_DataAccess.Configurations
         public void Configure(EntityTypeBuilder<CarBody> builder)
         {
             builder.Property(c => c.Name).IsRequired().HasMaxLength(30);
-            builder.Property(c => c.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.HasIndex(c => c.Name).IsUnique();
         }
     }

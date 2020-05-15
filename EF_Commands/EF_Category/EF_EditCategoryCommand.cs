@@ -31,7 +31,6 @@ namespace EF_Commands.EF_Category
                 }               
             }
             category.Name = request.Name;
-            category.ModifiedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

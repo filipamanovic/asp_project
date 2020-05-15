@@ -13,7 +13,6 @@ namespace EF_DataAccess.Configurations
         {
             builder.Property(c => c.Name).IsRequired().HasMaxLength(30);
             builder.HasIndex(c => c.Name).IsUnique();
-            builder.Property(c => c.CreatedAt).HasDefaultValueSql("GETDATE()");
         }
     }
 }

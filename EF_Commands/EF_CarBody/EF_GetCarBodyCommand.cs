@@ -19,6 +19,8 @@ namespace EF_Commands.EF_CarBody
             {
                 throw new EntityNotFoundException();
             }
+            if (carbody.IsDeleted)
+                throw new EntityAlreadyDeletedException();
             return new CarBodyDto
             {
                 Id = carbody.Id,

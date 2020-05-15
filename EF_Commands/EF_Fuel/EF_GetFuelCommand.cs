@@ -18,6 +18,8 @@ namespace EF_Commands.EF_Fuel
             {
                 throw new EntityNotFoundException();
             }
+            if (fuel.IsDeleted)
+                throw new EntityAlreadyDeletedException();
             return new FuelDto
             {
                 Id = fuel.Id,

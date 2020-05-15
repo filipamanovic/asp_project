@@ -21,7 +21,7 @@ namespace EF_DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-O15G4MH\SQLEXPRESS;Initial Catalog=asp-project3;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,6 +36,29 @@ namespace EF_DataAccess
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new CarEquipmentConfiguration());
             modelBuilder.ApplyConfiguration(new CarEquipmentAdConfiguration());
+        }
+
+        public override int SaveChanges()
+        {
+            foreach(var entry in ChangeTracker.Entries())
+            {
+                if(entry.Entity is BaseEntity be)
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            be.CreatedAt = DateTime.Now;
+                            be.IsDeleted = false;
+                            be.ModifiedAt = null;
+                            be.DeletedAt = null;
+                            break;
+                        case EntityState.Modified:
+                            be.ModifiedAt = DateTime.Now;
+                            break;
+                    }
+                }
+            }
+            return base.SaveChanges();
         }
     }
 }

@@ -21,7 +21,8 @@ namespace Api.Controllers
         private readonly IDeleteBrandCommand _deleteBrand;
         private readonly IEditBrandCommand _editBrand;
 
-        public BrandsController(IAddBrandCommand addBrand, IGetBrandsCommand getBrands, IGetBrandCommand getBrand, IDeleteBrandCommand deleteBrand, IEditBrandCommand editBrand)
+        public BrandsController(IAddBrandCommand addBrand, IGetBrandsCommand getBrands, 
+            IGetBrandCommand getBrand, IDeleteBrandCommand deleteBrand, IEditBrandCommand editBrand)
         {
             _addBrand = addBrand;
             _getBrands = getBrands;
@@ -58,9 +59,13 @@ namespace Api.Controllers
             {
                 return NotFound(e.msg);
             }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
+            }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal server error, getFuel: " + e.Message);
+                return StatusCode(500, "Internal server error, getBrand: " + e.Message);
             }
         }
 
@@ -107,7 +112,7 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal server error, editFuel: " + e.Message);
+                return StatusCode(500, "Internal server error, editBrand: " + e.Message);
             }
         }
 
@@ -130,7 +135,7 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal server error, deleteFuel" + e.Message);
+                return StatusCode(500, "Internal server error, deleteBrand" + e.Message);
             }
         }
     }

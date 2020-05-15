@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Commands.User;
-using Application.Dto;
+using Application.Dto.UserDto;
 using Application.Exceptions;
+using Application.Searches;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,24 +16,57 @@ namespace Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IAddUserCommand _addUser;
+        private readonly IGetUsersCommand _getUsers;
+        private readonly IGetUserCommand _getUser;
+        private readonly IEditUserCommand _editUser;
+        private readonly IDeleteUserCommand _deleteUser;
 
-        public UsersController(IAddUserCommand addUser)
+        public UsersController(IAddUserCommand addUser, IGetUsersCommand getUsers, IGetUserCommand getUser, 
+            IEditUserCommand editUser, IDeleteUserCommand deleteUser)
         {
             _addUser = addUser;
+            _getUsers = getUsers;
+            _getUser = getUser;
+            _editUser = editUser;
+            _deleteUser = deleteUser;
         }
 
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromQuery] UserSearch search)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var users = _getUsers.Execute(search);
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal Server Error, getUsers: " + e.Message);
+            }
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                var user = _getUser.Execute(id);
+                return Ok(user);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, getUser: " + e.Message);
+            }
         }
 
         // POST: api/Users
@@ -50,20 +84,59 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal server error, addBrand: " + e.Message);
+                return StatusCode(500, "Internal server error, addUser: " + e.Message);
             }
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] UserEdit dto)
         {
+            try
+            {
+                dto.Id = id;
+                _editUser.Execute(dto);
+                return NoContent();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return UnprocessableEntity(e.msg);
+            }
+            catch (EntityAlreadyExistException e)
+            {
+                return Conflict(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, editUser: " + e.Message);
+            }
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _deleteUser.Execute(id);
+                return NoContent();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, deleteUser: " + e.Message);
+            }
         }
     }
 }

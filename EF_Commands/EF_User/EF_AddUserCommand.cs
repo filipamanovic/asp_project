@@ -1,5 +1,5 @@
 ﻿using Application.Commands.User;
-using Application.Dto;
+using Application.Dto.UserDto;
 using Application.Exceptions;
 using EF_DataAccess;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EF_Commands.User
+namespace EF_Commands.EF_User
 {
     public class EF_AddUserCommand : EF_BaseEntity, IAddUserCommand
     {

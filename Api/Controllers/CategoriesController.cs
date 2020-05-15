@@ -30,8 +30,6 @@ namespace Api.Controllers
             _editCategory = editCategory;
         }
 
-
-
         // GET: api/Categories
         [HttpGet]
         public IActionResult Get([FromQuery]CategorySearch search)
@@ -59,6 +57,10 @@ namespace Api.Controllers
             catch (EntityNotFoundException e)
             {
                 return NotFound(e.msg);   
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
             }
             catch (Exception)
             {

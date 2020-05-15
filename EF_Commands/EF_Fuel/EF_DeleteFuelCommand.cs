@@ -22,6 +22,7 @@ namespace EF_Commands.EF_Fuel
                 throw new EntityAlreadyDeletedException();
             }
             fuel.IsDeleted = true;
+            fuel.DeletedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

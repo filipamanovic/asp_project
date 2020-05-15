@@ -22,6 +22,7 @@ namespace EF_Commands.EF_Category
                 throw new EntityAlreadyDeletedException();
             }
             category.IsDeleted = true;
+            category.DeletedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

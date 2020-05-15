@@ -23,7 +23,7 @@ namespace EF_Commands.EF_CarBody
             {
                 query = query.Where(c => c.IsDeleted != request.IsActive);
             }
-            return query.Select(c => new CarBodyDto
+            return query.Where(c => !c.IsDeleted).Select(c => new CarBodyDto
             {
                 Id = c.Id,
                 Name = c.Name

@@ -60,6 +60,10 @@ namespace Api.Controllers
             {
                 return NotFound(e.msg);
             }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
+            }
             catch (Exception e)
             {
                 return StatusCode(500, "Internal server error, getFuel: " + e.Message);

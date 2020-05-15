@@ -21,8 +21,12 @@ namespace EF_Commands.EF_Brand
             {
                 throw new EntityNotFoundException();
             }
+            if (brand.IsDeleted == true)
+                throw new EntityAlreadyDeletedException();
+
             return new BrandDto
             {
+                Id = brand.Id,
                 Name = brand.Name,
                 City = brand.City,
                 LogoUrl = brand.Logo,

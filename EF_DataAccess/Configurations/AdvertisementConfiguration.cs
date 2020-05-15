@@ -13,7 +13,6 @@ namespace EF_DataAccess.Configurations
         {
             builder.Property(a => a.AdName).IsRequired().HasMaxLength(50);
             builder.Property(a => a.AdDescription).HasMaxLength(500);
-            builder.Property(a => a.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.Property(a => a.City).IsRequired().HasMaxLength(40);
 
             builder.HasOne(f => f.Fuel)

@@ -18,6 +18,8 @@ namespace EF_Commands.EF_Category
             {
                 throw new EntityNotFoundException();
             }
+            if(category.IsDeleted) 
+                throw new EntityAlreadyDeletedException();
             return new CategoryDto
             {
                 Id = category.Id,

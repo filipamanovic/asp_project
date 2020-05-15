@@ -25,6 +25,7 @@ namespace EF_Commands.EF_Brand
                 throw new EntityAlreadyDeletedException();
             }
             brand.IsDeleted = true;
+            brand.DeletedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

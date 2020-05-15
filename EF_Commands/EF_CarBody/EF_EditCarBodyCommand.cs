@@ -31,7 +31,6 @@ namespace EF_Commands.EF_CarBody
                 }
             }
             carbody.Name = request.Name;
-            carbody.ModifiedAt = DateTime.Now;
             Context.SaveChanges();
         }
     }

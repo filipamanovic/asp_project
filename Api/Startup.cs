@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Commands.Advertisement;
 using Application.Commands.Brand;
 using Application.Commands.CarBody;
 using Application.Commands.Category;
+using Application.Commands.Equipment;
 using Application.Commands.Fuel;
+using Application.Commands.Model;
 using Application.Commands.User;
+using EF_Commands.EF_Advertisement;
 using EF_Commands.EF_Brand;
 using EF_Commands.EF_CarBody;
 using EF_Commands.EF_Category;
+using EF_Commands.EF_Equipment;
 using EF_Commands.EF_Fuel;
-using EF_Commands.User;
+using EF_Commands.EF_Model;
+using EF_Commands.EF_User;
 using EF_DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +70,24 @@ namespace Api
             services.AddTransient<IEditBrandCommand, EF_EditBrandCommand>();
             //Users
             services.AddTransient<IAddUserCommand, EF_AddUserCommand>();
+            services.AddTransient<IGetUsersCommand, EF_GetUsersCommand>();
+            services.AddTransient<IGetUserCommand, EF_GetUserCommand>();
+            services.AddTransient<IEditUserCommand, EF_EditUserCommand>();
+            services.AddTransient<IDeleteUserCommand, EF_DeleteUserCommand>();
+            //Models
+            services.AddTransient<IAddModelCommand, EF_AddModelCommand>();
+            services.AddTransient<IGetModelsCommand, EF_GetModelsCommand>();
+            services.AddTransient<IGetModelCommand, Ef_GetModelCommand>();
+            services.AddTransient<IEditModelCommand, EF_EditModelCommand>();
+            services.AddTransient<IDeleteModelCommand, EF_DeleteModelCommand>();
+            //Equipemnts
+            services.AddTransient<IAddEquipmentCommand, EF_AddEquipmentCommand>();
+            services.AddTransient<IGetEquipmentsCommand, EF_GetEquipmentsCommand>();
+            services.AddTransient<IGetEquipmentCommand, EF_GetEquipmentCommand>();
+            services.AddTransient<IEditEquipmentCommand, EF_EditEquipmentCommand>();
+            services.AddTransient<IDeleteEquipmentCommand, EF_DeleteEquipmentCommand>();
+            //Advertisements
+            services.AddTransient<IAddAdvertisementCommand, EF_AddAdvertisementCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

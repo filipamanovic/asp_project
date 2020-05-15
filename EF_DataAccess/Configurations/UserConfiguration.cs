@@ -16,7 +16,6 @@ namespace EF_DataAccess.Configurations
             builder.Property(u => u.Email).IsRequired().HasMaxLength(50);
             builder.HasIndex(u => u.Email).IsUnique();
             builder.Property(u => u.PhoneNumber).IsRequired().HasMaxLength(30);
-            builder.Property(u => u.CreatedAt).HasDefaultValueSql("GETDATE()");
         }
     }
 }

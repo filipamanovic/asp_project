@@ -58,6 +58,10 @@ namespace Api.Controllers
             {
                 return NotFound(e.msg);
             }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return NotFound(e.msg);
+            }
             catch (Exception)
             {
                 return StatusCode(500, "Inteernal server error, getCategory");
