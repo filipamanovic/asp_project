@@ -1,5 +1,5 @@
 ﻿using Application.Commands.User;
-using Application.Dto.UserDto;
+using Application.Dto.UserDtoData;
 using Application.Searches;
 using EF_DataAccess;
 using System;

@@ -15,26 +15,9 @@ namespace Api.Controllers
     [ApiController]
     public class FuelsController : ControllerBase
     {
-        private readonly IAddFuelCommand _addFuel;
-        private readonly IGetFuelsCommand _getFuels;
-        private readonly IGetFuelCommand _getFuel;
-        private readonly IDeleteFuelCommand _deleteFuel;
-        private readonly IEditFuelCommand _editFuel;
-
-        public FuelsController(IAddFuelCommand addFuel, IGetFuelsCommand getFuels, IGetFuelCommand getFuel, IDeleteFuelCommand deleteFuel, IEditFuelCommand editFuel)
-        {
-            _addFuel = addFuel;
-            _getFuels = getFuels;
-            _getFuel = getFuel;
-            _deleteFuel = deleteFuel;
-            _editFuel = editFuel;
-        }
-
-
-
         // GET: api/Fuels
         [HttpGet]
-        public IActionResult Get([FromQuery] FuelSearch search)
+        public IActionResult Get([FromQuery] FuelSearch search, [FromServices] IGetFuelsCommand _getFuels)
         {
             try
             {
@@ -49,7 +32,7 @@ namespace Api.Controllers
 
         // GET: api/Fuels/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetFuelCommand _getFuel)
         {
             try
             {
@@ -72,7 +55,7 @@ namespace Api.Controllers
 
         // POST: api/Fuels
         [HttpPost]
-        public IActionResult Post([FromBody] FuelDto dto)
+        public IActionResult Post([FromBody] FuelDto dto, [FromServices] IAddFuelCommand _addFuel)
         {
             try
             {
@@ -91,7 +74,7 @@ namespace Api.Controllers
 
         // PUT: api/Fuels/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] FuelDto dto)
+        public IActionResult Put(int id, [FromBody] FuelDto dto, [FromServices] IEditFuelCommand _editFuel)
         {
             try
             {
@@ -119,7 +102,7 @@ namespace Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteFuelCommand _deleteFuel)
         {
             try
             {

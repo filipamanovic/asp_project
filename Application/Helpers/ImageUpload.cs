@@ -20,7 +20,9 @@ namespace Application.Helpers
                 throw new ImageUploadException("limit exceeded, max 5 images");
             if (images.Any(i => !ImageUpload.AllowedExtensions.Contains(Path.GetExtension(i.FileName))))
                 throw new ImageUploadException("format not allowed, allowed: jpg, jpeg, png, gif");
-
+            if (images.Any(i => i.Length > 1000000))
+                throw new ImageUploadException("image size exceeded, max 1MB");
+            
             List<ImageUploadDto> dto = new List<ImageUploadDto>();
            
             foreach (var image in images)

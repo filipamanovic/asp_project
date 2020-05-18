@@ -88,6 +88,10 @@ namespace Api
             services.AddTransient<IDeleteEquipmentCommand, EF_DeleteEquipmentCommand>();
             //Advertisements
             services.AddTransient<IAddAdvertisementCommand, EF_AddAdvertisementCommand>();
+            services.AddTransient<IGetAdvertisementsCommand, EF_GetAdvertisementsCommand>();
+            services.AddTransient<IGetAdvertisementCommand, EF_GetAdvertisementCommand>();
+            services.AddTransient<IEditAdvertisementCommand, EF_EditAdvertisementCommand>();
+            services.AddTransient<IDeleteAdvertisementCommand, EF_DeleteAdvertisementCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

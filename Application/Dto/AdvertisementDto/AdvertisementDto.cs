@@ -9,13 +9,12 @@ namespace Application.Dto.AdvertisementDto
 {
     public class AdvertisementDto
     {
-        public int Id { get; set; }
         [Required]
         [RegularExpression(@"^[a-zA-Z''-'+\s\d\.\,]{2,30}$",
             ErrorMessage = "Advertisement name format is not allowed.")]
         public string AdName { get; set; }
         [Required]
-        [RegularExpression(@"^[A-z''-'+\s\d\.\,]{2,500}$",
+        [RegularExpression(@"^[A-z''-'+\s\d\.\,\*,ČĆŽŠĐčćžšđ]{2,500}$",
             ErrorMessage = "Advertisement description format is not allowed.")]
         public string AdDesc { get; set; }
         [Required]

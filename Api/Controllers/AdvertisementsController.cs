@@ -6,6 +6,7 @@ using Application.Commands.Advertisement;
 using Application.Dto.AdvertisementDto;
 using Application.Exceptions;
 using Application.Helpers;
+using Application.Searches;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,16 +18,42 @@ namespace Api.Controllers
     {
         // GET: api/Advertisements
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromQuery] AdvertisementSearch search, 
+            [FromServices] IGetAdvertisementsCommand _getAdvertisements)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var advertisements = _getAdvertisements.Execute(search);
+                return Ok(advertisements);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Internal server error, getBrands: " + e.Message);
+            }
         }
 
         // GET: api/Advertisements/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetAdvertisementCommand _getAdvertisement)
         {
-            return "value";
+            try
+            {
+                var advertisement = _getAdvertisement.Execute(id);
+                return Ok(advertisement);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return Conflict(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, getAdvertisement: " + e.Message);
+            }
         }
 
         // POST: api/Advertisements
@@ -65,14 +92,54 @@ namespace Api.Controllers
 
         // PUT: api/Advertisements/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] AdvertisementEdit dto,
+            [FromServices] IEditAdvertisementCommand _editAdvertisement)
         {
+            try
+            {
+                dto.Id = id;
+                _editAdvertisement.Execute(dto);
+                return NoContent();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return UnprocessableEntity(e.msg);
+            }
+            catch (EntityAlreadyExistException e)
+            {
+                return Conflict(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, editAdvertisement: " + e.Message);
+            }
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteAdvertisementCommand _deleteAdvertisement)
         {
+            try
+            {
+                _deleteAdvertisement.Execute(id);
+                return NoContent();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.msg);
+            }
+            catch (EntityAlreadyDeletedException e)
+            {
+                return Conflict(e.msg);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error, deleteAdvertisement" + e.Message);
+            }
         }
     }
 }

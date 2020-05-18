@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Commands.User;
-using Application.Dto.UserDto;
+using Application.Dto.UserDtoData;
 using Application.Exceptions;
 using Application.Searches;
 using Microsoft.AspNetCore.Http;
@@ -15,25 +15,9 @@ namespace Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IAddUserCommand _addUser;
-        private readonly IGetUsersCommand _getUsers;
-        private readonly IGetUserCommand _getUser;
-        private readonly IEditUserCommand _editUser;
-        private readonly IDeleteUserCommand _deleteUser;
-
-        public UsersController(IAddUserCommand addUser, IGetUsersCommand getUsers, IGetUserCommand getUser, 
-            IEditUserCommand editUser, IDeleteUserCommand deleteUser)
-        {
-            _addUser = addUser;
-            _getUsers = getUsers;
-            _getUser = getUser;
-            _editUser = editUser;
-            _deleteUser = deleteUser;
-        }
-
         // GET: api/Users
         [HttpGet]
-        public IActionResult Get([FromQuery] UserSearch search)
+        public IActionResult Get([FromQuery] UserSearch search, [FromServices] IGetUsersCommand _getUsers)
         {
             try
             {
@@ -48,7 +32,7 @@ namespace Api.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetUserCommand _getUser)
         {
             try
             {
@@ -71,8 +55,8 @@ namespace Api.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public IActionResult Post([FromBody] UserDto dto)
-        {
+        public IActionResult Post([FromBody] UserDto dto, [FromServices] IAddUserCommand _addUser)
+        { 
             try
             {
                 _addUser.Execute(dto);
@@ -90,7 +74,7 @@ namespace Api.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UserEdit dto)
+        public IActionResult Put(int id, [FromBody] UserEdit dto, [FromServices] IEditUserCommand _editUser)
         {
             try
             {
@@ -118,7 +102,7 @@ namespace Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteUserCommand _deleteUser)
         {
             try
             {

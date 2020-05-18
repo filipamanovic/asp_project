@@ -15,24 +15,9 @@ namespace Api.Controllers
     [ApiController]
     public class CarBodiesController : ControllerBase
     {
-        private readonly IAddCarBodyCommand _addCarBody;
-        private readonly IGetCarBodiesCommand _getCarBodies;
-        private readonly IGetCarBodyCommand _getCarBody;
-        private readonly IDeleteCarBodyCommand _deleteCarBody;
-        private readonly IEditCarBodyCommand _editCarBody;
-
-        public CarBodiesController(IAddCarBodyCommand addCarBody, IGetCarBodiesCommand getCarBodies, IGetCarBodyCommand getCarBody, IDeleteCarBodyCommand deleteCarBody, IEditCarBodyCommand editCarBody)
-        {
-            _addCarBody = addCarBody;
-            _getCarBodies = getCarBodies;
-            _getCarBody = getCarBody;
-            _deleteCarBody = deleteCarBody;
-            _editCarBody = editCarBody;
-        }
-
         // GET: api/CarBodies
         [HttpGet]
-        public IActionResult Get([FromQuery] CarBodySearch search)
+        public IActionResult Get([FromQuery] CarBodySearch search, [FromServices] IGetCarBodiesCommand _getCarBodies)
         {
             try
             {
@@ -47,7 +32,7 @@ namespace Api.Controllers
 
         // GET: api/CarBodies/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetCarBodyCommand _getCarBody)
         {
             try
             {
@@ -70,7 +55,7 @@ namespace Api.Controllers
 
         // POST: api/CarBodies
         [HttpPost]
-        public IActionResult Post([FromBody] CarBodyDto dto)
+        public IActionResult Post([FromBody] CarBodyDto dto, [FromServices] IAddCarBodyCommand _addCarBody)
         {
             try
             {
@@ -89,7 +74,7 @@ namespace Api.Controllers
 
         // PUT: api/CarBodies/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] CarBodyDto dto)
+        public IActionResult Put(int id, [FromBody] CarBodyDto dto, [FromServices] IEditCarBodyCommand _editCarBody)
         {
             try
             {
@@ -117,7 +102,7 @@ namespace Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteCarBodyCommand _deleteCarBody)
         {
             try
             {

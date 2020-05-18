@@ -15,24 +15,9 @@ namespace Api.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private IAddCategoryCommand _addCategory;
-        private IGetCategoriesCommand _getCategories;
-        private IGetCategoryCommand _getCategory;
-        private IDeleteCategoryCommand _deleteCategory;
-        private IEditCategoryCommand _editCategory;
-
-        public CategoriesController(IAddCategoryCommand addCategory, IGetCategoriesCommand getCategories, IGetCategoryCommand getCategory, IDeleteCategoryCommand deleteCategory, IEditCategoryCommand editCategory)
-        {
-            _addCategory = addCategory;
-            _getCategories = getCategories;
-            _getCategory = getCategory;
-            _deleteCategory = deleteCategory;
-            _editCategory = editCategory;
-        }
-
         // GET: api/Categories
         [HttpGet]
-        public IActionResult Get([FromQuery]CategorySearch search)
+        public IActionResult Get([FromQuery]CategorySearch search, [FromServices] IGetCategoriesCommand _getCategories)
         {
             try
             {
@@ -47,7 +32,7 @@ namespace Api.Controllers
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult Get(int id, [FromServices] IGetCategoryCommand _getCategory)
         {
             try
             {
@@ -70,7 +55,7 @@ namespace Api.Controllers
 
         // POST: api/Categories
         [HttpPost]
-        public IActionResult Post([FromBody] CategoryDto dto)
+        public IActionResult Post([FromBody] CategoryDto dto, [FromServices] IAddCategoryCommand _addCategory)
         {
             try
             {
@@ -89,7 +74,7 @@ namespace Api.Controllers
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] CategoryDto dto)
+        public IActionResult Put(int id, [FromBody] CategoryDto dto, [FromServices] IEditCategoryCommand _editCategory)
         {
             try
             {
@@ -117,7 +102,7 @@ namespace Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteCategoryCommand _deleteCategory)
         {
             try
             {

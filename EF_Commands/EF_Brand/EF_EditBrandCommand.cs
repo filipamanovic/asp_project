@@ -26,7 +26,7 @@ namespace EF_Commands.EF_Brand
             {
                 throw new EntityAlreadyDeletedException();
             }
-            if (brand.Name != request.Name)
+            if (brand.Name != request.Name && request.Name != null)
             {
                 if (Context.Fuels.Any(f => f.Name == request.Name))
                 {

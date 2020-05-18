@@ -15,25 +15,9 @@ namespace Api.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private readonly IAddBrandCommand _addBrand;
-        private readonly IGetBrandsCommand _getBrands;
-        private readonly IGetBrandCommand _getBrand;
-        private readonly IDeleteBrandCommand _deleteBrand;
-        private readonly IEditBrandCommand _editBrand;
-
-        public BrandsController(IAddBrandCommand addBrand, IGetBrandsCommand getBrands, 
-            IGetBrandCommand getBrand, IDeleteBrandCommand deleteBrand, IEditBrandCommand editBrand)
-        {
-            _addBrand = addBrand;
-            _getBrands = getBrands;
-            _getBrand = getBrand;
-            _deleteBrand = deleteBrand;
-            _editBrand = editBrand;
-        }
-
         // GET: api/Brands
         [HttpGet]
-        public IActionResult Get([FromQuery]BrandSearch search)
+        public IActionResult Get([FromQuery]BrandSearch search, [FromServices] IGetBrandsCommand _getBrands)
         {
             try
             {
@@ -48,7 +32,7 @@ namespace Api.Controllers
 
         // GET: api/Brands/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetBrandCommand _getBrand)
         {
             try
             {
@@ -71,7 +55,7 @@ namespace Api.Controllers
 
         // POST: api/Brands
         [HttpPost]
-        public IActionResult Post([FromBody] BrandDto dto)
+        public IActionResult Post([FromBody] BrandDto dto, [FromServices] IAddBrandCommand _addBrand)
         {
             try
             {
@@ -90,7 +74,7 @@ namespace Api.Controllers
 
         // PUT: api/Brands/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] BrandDto dto)
+        public IActionResult Put(int id, [FromBody] BrandDto dto, [FromServices] IEditBrandCommand _editBrand)
         {
             try
             {
@@ -118,7 +102,7 @@ namespace Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteBrandCommand _deleteBrand)
         {
             try
             {

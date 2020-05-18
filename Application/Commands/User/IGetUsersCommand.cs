@@ -1,4 +1,4 @@
-﻿using Application.Dto.UserDto;
+﻿using Application.Dto.UserDtoData;
 using Application.Interfaces;
 using Application.Searches;
 using System;

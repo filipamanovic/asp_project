@@ -1,9 +1,8 @@
-﻿using Application.Dto.AdvertisementDto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Responcses
+namespace Application.Responses
 {
     public class PageResponse<T>
     {
