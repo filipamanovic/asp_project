@@ -7,6 +7,7 @@ using Application.Commands.Brand;
 using Application.Commands.CarBody;
 using Application.Commands.Category;
 using Application.Commands.Equipment;
+using Application.Commands.FakeData;
 using Application.Commands.Fuel;
 using Application.Commands.Model;
 using Application.Commands.User;
@@ -18,6 +19,7 @@ using EF_Commands.EF_Equipment;
 using EF_Commands.EF_Fuel;
 using EF_Commands.EF_Model;
 using EF_Commands.EF_User;
+using EF_Commands.Fake_Data;
 using EF_DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,6 +94,8 @@ namespace Api
             services.AddTransient<IGetAdvertisementCommand, EF_GetAdvertisementCommand>();
             services.AddTransient<IEditAdvertisementCommand, EF_EditAdvertisementCommand>();
             services.AddTransient<IDeleteAdvertisementCommand, EF_DeleteAdvertisementCommand>();
+            //FakerData, run only once: POST /api/fakedatafeed
+            services.AddTransient<IAddFakeDataCommand, EF_AddFakeDataCommand>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

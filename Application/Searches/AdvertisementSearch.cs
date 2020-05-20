@@ -21,9 +21,9 @@ namespace Application.Searches
         public int? ModelId { get; set; }
         public int? CarBodyId { get; set; }
         public int? FuelId { get; set; }
-        public int CategoryId { get; set; } = 1;
+        public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
         public int CurrentPage { get; set; } = 1;
-        public int PerPage { get; set; } = 2;
+        public int PerPage { get; set; } = 5;
     }
 }

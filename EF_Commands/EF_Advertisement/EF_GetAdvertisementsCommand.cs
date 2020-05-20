@@ -51,7 +51,8 @@ namespace EF_Commands.EF_Advertisement
                 query = query.Where(a => a.CarBodyId == request.CarBodyId);  
             if (request.FuelId.HasValue)
                 query = query.Where(a => a.FuelId == request.FuelId);
-            query = query.Where(a => a.CategoryId == request.CategoryId);
+            if (request.CategoryId.HasValue)
+                query = query.Where(a => a.CategoryId == request.CategoryId);
             if (request.BrandId.HasValue)
                 query = query.Where(a => a.Model.BrandId == request.BrandId);
 

@@ -21,7 +21,8 @@ namespace EF_DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project;Integrated Security=True");
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project_faker;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
