@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace EF_DataAccess.Configurations
@@ -16,6 +17,7 @@ namespace EF_DataAccess.Configurations
             builder.Property(u => u.Email).IsRequired().HasMaxLength(50);
             builder.HasIndex(u => u.Email).IsUnique();
             builder.Property(u => u.PhoneNumber).IsRequired().HasMaxLength(30);
+            builder.Property(u => u.Password).IsRequired();
         }
     }
 }

@@ -12,6 +12,9 @@ namespace EF_Commands.EF_CarBody
     {
         public EF_GetCarBodyCommand(asp_projectContext context) : base(context) { }
 
+        public int Id => 13;
+        public string UseCaseName => "GetCarBodyUsingEF";
+
         public CarBodyDto Execute(int request)
         {
             var carbody = Context.CarBodies.Find(request);

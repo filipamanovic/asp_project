@@ -13,6 +13,9 @@ namespace EF_Commands.EF_Brand
         {
         }
 
+        public int Id => 5;
+        public string UseCaseName => "DeleteBrandUsingEF";
+
         public void Execute(int request)
         {
             var brand = Context.Brands.Find(request);

@@ -1,34 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Commands.Advertisement;
-using Application.Commands.Brand;
-using Application.Commands.CarBody;
-using Application.Commands.Category;
-using Application.Commands.Equipment;
-using Application.Commands.FakeData;
-using Application.Commands.Fuel;
-using Application.Commands.Model;
-using Application.Commands.User;
+using System.Text;
+using Api.Core;
+using Application.Commands.Email;
+using Application.Helpers;
+using Application.Interfaces;
+using AutoMapper;
 using EF_Commands.EF_Advertisement;
-using EF_Commands.EF_Brand;
-using EF_Commands.EF_CarBody;
-using EF_Commands.EF_Category;
-using EF_Commands.EF_Equipment;
-using EF_Commands.EF_Fuel;
-using EF_Commands.EF_Model;
-using EF_Commands.EF_User;
-using EF_Commands.Fake_Data;
+using EF_Commands.Email;
+using EF_Commands.Helpers;
 using EF_DataAccess;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace Api
 {
@@ -44,58 +35,62 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = new AppSettings();
+            Configuration.Bind(appSettings);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<asp_projectContext>();
-            //Categories
-            services.AddTransient<IAddCategoryCommand, EF_AddCategoryCommand>();
-            services.AddTransient<IGetCategoriesCommand, EF_GetCategoriesCommand>();
-            services.AddTransient<IGetCategoryCommand, EF_GetCategoryCommand>();
-            services.AddTransient<IDeleteCategoryCommand, EF_DeleteCategoryCommand>();
-            services.AddTransient<IEditCategoryCommand, EF_EditCategoryCommand>();
-            //Fuels
-            services.AddTransient<IAddFuelCommand, EF_AddFuelCommand>();
-            services.AddTransient<IGetFuelsCommand, EF_GetFuelsCommand>();
-            services.AddTransient<IGetFuelCommand, EF_GetFuelCommand>();
-            services.AddTransient<IDeleteFuelCommand, EF_DeleteFuelCommand>();
-            services.AddTransient<IEditFuelCommand, EF_EditFuelCommand>();
-            //CarBodies
-            services.AddTransient<IAddCarBodyCommand, EF_AddCarBodyCommand>();
-            services.AddTransient<IGetCarBodiesCommand, EF_GetCarBodiesCommand>();
-            services.AddTransient<IGetCarBodyCommand, EF_GetCarBodyCommand>();
-            services.AddTransient<IDeleteCarBodyCommand, EF_DeleteCarBodyCommand>();
-            services.AddTransient<IEditCarBodyCommand, EF_EditCarBodyCommand>();
-            //Brands
-            services.AddTransient<IAddBrandCommand, EF_AddBrandCommand>();
-            services.AddTransient<IGetBrandsCommand, EF_GetBrandsCommand>();
-            services.AddTransient<IGetBrandCommand, EF_GetBrandCommand>();
-            services.AddTransient<IDeleteBrandCommand, EF_DeleteBrandCommand>();
-            services.AddTransient<IEditBrandCommand, EF_EditBrandCommand>();
-            //Users
-            services.AddTransient<IAddUserCommand, EF_AddUserCommand>();
-            services.AddTransient<IGetUsersCommand, EF_GetUsersCommand>();
-            services.AddTransient<IGetUserCommand, EF_GetUserCommand>();
-            services.AddTransient<IEditUserCommand, EF_EditUserCommand>();
-            services.AddTransient<IDeleteUserCommand, EF_DeleteUserCommand>();
-            //Models
-            services.AddTransient<IAddModelCommand, EF_AddModelCommand>();
-            services.AddTransient<IGetModelsCommand, EF_GetModelsCommand>();
-            services.AddTransient<IGetModelCommand, Ef_GetModelCommand>();
-            services.AddTransient<IEditModelCommand, EF_EditModelCommand>();
-            services.AddTransient<IDeleteModelCommand, EF_DeleteModelCommand>();
-            //Equipemnts
-            services.AddTransient<IAddEquipmentCommand, EF_AddEquipmentCommand>();
-            services.AddTransient<IGetEquipmentsCommand, EF_GetEquipmentsCommand>();
-            services.AddTransient<IGetEquipmentCommand, EF_GetEquipmentCommand>();
-            services.AddTransient<IEditEquipmentCommand, EF_EditEquipmentCommand>();
-            services.AddTransient<IDeleteEquipmentCommand, EF_DeleteEquipmentCommand>();
-            //Advertisements
-            services.AddTransient<IAddAdvertisementCommand, EF_AddAdvertisementCommand>();
-            services.AddTransient<IGetAdvertisementsCommand, EF_GetAdvertisementsCommand>();
-            services.AddTransient<IGetAdvertisementCommand, EF_GetAdvertisementCommand>();
-            services.AddTransient<IEditAdvertisementCommand, EF_EditAdvertisementCommand>();
-            services.AddTransient<IDeleteAdvertisementCommand, EF_DeleteAdvertisementCommand>();
-            //FakerData, run only once: POST /api/fakedatafeed
-            services.AddTransient<IAddFakeDataCommand, EF_AddFakeDataCommand>(); 
+            services.AddTransient<UseCaseExecutor>();
+            services.AddHttpContextAccessor();
+            services.AddApplicationActor();
+            services.AddJwt(appSettings);
+            services.AddAutoMapper(typeof(EF_AddAdvertisementCommand).Assembly);
+
+            //Email
+            services.AddTransient<IEmailSender, SmtpEmailSender>(x => 
+            {
+                return new SmtpEmailSender(appSettings.EmailFrom, appSettings.EmailPassword);
+            });
+
+            //Encryption
+            var enc = new Encryption(appSettings.Encryption);
+            services.AddSingleton(enc);
+            services.AddUseCases();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Asp-project", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                              Scheme = "oauth2",
+                              Name = "Bearer",
+                              In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
+                 });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,6 +106,13 @@ namespace Api
                 app.UseHsts();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger");
+            });
+            app.UseMiddleware<GlobalExceptionHandler>();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

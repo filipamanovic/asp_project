@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Application.Commands.Brand;
 using Application.Dto;
 using Application.Exceptions;
+using Application.Helpers;
+using Application.Interfaces;
 using Application.Searches;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,112 +17,50 @@ namespace Api.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
+        private readonly UseCaseExecutor _caseExecutor;
+
+        public BrandsController(UseCaseExecutor caseExecutor)
+        {
+            _caseExecutor = caseExecutor;
+        }
+
         // GET: api/Brands
         [HttpGet]
         public IActionResult Get([FromQuery]BrandSearch search, [FromServices] IGetBrandsCommand _getBrands)
         {
-            try
-            {
-                var brands = _getBrands.Execute(search);
-                return Ok(brands);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, getBrands: " +  e.Message);
-            }
+            return Ok(_caseExecutor.ExecuteCommand(_getBrands, search));
         }
 
         // GET: api/Brands/5
         [HttpGet("{id}")]
         public IActionResult Get(int id, [FromServices] IGetBrandCommand _getBrand)
         {
-            try
-            {
-                var brand = _getBrand.Execute(id);
-                return Ok(brand);
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, getBrand: " + e.Message);
-            }
+            return Ok(_caseExecutor.ExecuteCommand(_getBrand, id));
         }
 
         // POST: api/Brands
         [HttpPost]
         public IActionResult Post([FromBody] BrandDto dto, [FromServices] IAddBrandCommand _addBrand)
         {
-            try
-            {
-                _addBrand.Execute(dto);
-                return StatusCode(201);
-            }
-            catch(EntityAlreadyExistException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, addBrand: " + e.Message);
-            }
+            _caseExecutor.ExecuteCommand(_addBrand, dto);
+            return StatusCode(201);
         }
 
         // PUT: api/Brands/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] BrandDto dto, [FromServices] IEditBrandCommand _editBrand)
         {
-            try
-            {
-                dto.Id = id;
-                _editBrand.Execute(dto);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (EntityAlreadyExistException e)
-            {
-                return Conflict(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, editBrand: " + e.Message);
-            }
+            dto.Id = id;
+            _caseExecutor.ExecuteCommand(_editBrand, dto);
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteBrandCommand _deleteBrand)
         {
-            try
-            {
-                _deleteBrand.Execute(id);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return Conflict(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, deleteBrand" + e.Message);
-            }
+            _caseExecutor.ExecuteCommand(_deleteBrand, id);
+            return NoContent();
         }
     }
 }

@@ -10,6 +10,10 @@ namespace EF_Commands.EF_CarBody
     public class EF_DeleteCarBodyCommand : EF_BaseEntity, IDeleteCarBodyCommand
     {
         public EF_DeleteCarBodyCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 15;
+        public string UseCaseName => "DeleteCarBodyUsingEF";
+
         public void Execute(int request)
         {
             var carbody = Context.CarBodies.Find(request);

@@ -12,6 +12,10 @@ namespace EF_Commands.EF_CarBody
     public class EF_GetCarBodiesCommand : EF_BaseEntity, IGetCarBodiesCommand
     {
         public EF_GetCarBodiesCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 12;
+        public string UseCaseName => "GetCarBodiesUsingEF";
+
         public IEnumerable<CarBodyDto> Execute(CarBodySearch request)
         {
             var query = Context.CarBodies.AsQueryable();

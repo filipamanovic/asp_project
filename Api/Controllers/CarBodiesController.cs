@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Commands.CarBody;
 using Application.Dto;
 using Application.Exceptions;
+using Application.Helpers;
 using Application.Searches;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,112 +16,50 @@ namespace Api.Controllers
     [ApiController]
     public class CarBodiesController : ControllerBase
     {
+        private readonly UseCaseExecutor _caseExecutor;
+
+        public CarBodiesController(UseCaseExecutor caseExecutor)
+        {
+            _caseExecutor = caseExecutor;
+        }
+
         // GET: api/CarBodies
         [HttpGet]
         public IActionResult Get([FromQuery] CarBodySearch search, [FromServices] IGetCarBodiesCommand _getCarBodies)
-        {
-            try
-            {
-                var carbodies = _getCarBodies.Execute(search);
-                return Ok(carbodies);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal server error, getCategories");
-            }
+        {          
+            return Ok(_caseExecutor.ExecuteCommand(_getCarBodies, search));         
         }
 
         // GET: api/CarBodies/5
         [HttpGet("{id}")]
         public IActionResult Get(int id, [FromServices] IGetCarBodyCommand _getCarBody)
-        {
-            try
-            {
-                var carBody = _getCarBody.Execute(id);
-                return Ok(carBody);
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Inteernal server error, getCategory");
-            }
+        {          
+            return Ok(_caseExecutor.ExecuteCommand(_getCarBody, id));          
         }
 
         // POST: api/CarBodies
         [HttpPost]
         public IActionResult Post([FromBody] CarBodyDto dto, [FromServices] IAddCarBodyCommand _addCarBody)
         {
-            try
-            {
-                _addCarBody.Execute(dto);
-                return StatusCode(201);
-            }
-            catch (EntityAlreadyExistException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, insertCarBody." + e.Message);
-            }
+            _caseExecutor.ExecuteCommand(_addCarBody, dto);
+            return StatusCode(201);
         }
 
         // PUT: api/CarBodies/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] CarBodyDto dto, [FromServices] IEditCarBodyCommand _editCarBody)
         {
-            try
-            {
-                dto.Id = id;
-                _editCarBody.Execute(dto);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (EntityAlreadyExistException e)
-            {
-                return Conflict(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, editFuel: " + e.Message);
-            }
+            dto.Id = id;
+            _caseExecutor.ExecuteCommand(_editCarBody, dto);
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteCarBodyCommand _deleteCarBody)
         {
-            try
-            {
-                _deleteCarBody.Execute(id);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return Conflict(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, deleteCarBody" + e.Message);
-            }
+            _caseExecutor.ExecuteCommand(_deleteCarBody, id);
+            return NoContent();
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using Application.Commands.User;
 using Application.Dto.UserDtoData;
+using Application.Responcses;
 using Application.Searches;
+using AutoMapper;
+using Domain;
+using EF_Commands.Helpers;
 using EF_DataAccess;
 using System;
 using System.Collections.Generic;
@@ -11,26 +15,27 @@ namespace EF_Commands.EF_User
 {
     public class EF_GetUsersCommand : EF_BaseEntity, IGetUsersCommand
     {
-        public EF_GetUsersCommand(asp_projectContext context) : base(context)
+        private readonly IMapper _mapper;
+        public EF_GetUsersCommand(asp_projectContext context, IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
 
-        public IEnumerable<UserDto> Execute(UserSearch request)
+        public int Id => 27;
+        public string UseCaseName => "GetUsersUsingEF";
+
+        public PageResponse<UserDto> Execute(UserSearch request)
         {
             var query = Context.Users.AsQueryable();
 
             if (request.FirstName != null)
-                query.Where(u => u.FirstName.ToLower() == request.FirstName.ToLower());
+                query = query.Where(u => u.FirstName.ToLower() == request.FirstName.ToLower());
             if (request.LastName != null)
-                query.Where(u => u.LastName.ToLower() == request.LastName.ToLower());
+                query = query.Where(u => u.LastName.ToLower() == request.LastName.ToLower());
 
-            return query.Where(u => !u.IsDeleted).Select(u => new UserDto
-            {
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                PhoneNumber = u.PhoneNumber
-            });
+            query = query.Where(u => !u.IsDeleted);
+
+            return query.Paged<UserDto, User>(request, _mapper);
         }
     }
 }

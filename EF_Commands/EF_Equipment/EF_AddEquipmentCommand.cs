@@ -16,6 +16,9 @@ namespace EF_Commands.EF_Equipment
         {
         }
 
+        public int Id => 31;
+        public string UseCaseName => "CreateEquipmentUsingEF";
+
         public void Execute(EquipmentDto request)
         {
             if (Context.CarEquipments.Any(e => e.EquipmentName.ToLower() == request.EquipmentName.ToLower()))

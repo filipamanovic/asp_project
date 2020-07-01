@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Commands.User
 {
-    public interface IEditUserCommand : ICommand<UserEdit>
+    public interface IEditUserCommand : ICommand<UserDto>
     {
     }
 }

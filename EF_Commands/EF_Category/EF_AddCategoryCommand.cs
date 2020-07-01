@@ -14,6 +14,9 @@ namespace EF_Commands.EF_Category
     {
         public EF_AddCategoryCommand(asp_projectContext context) : base(context) { }
 
+        public int Id => 16;
+        public string UseCaseName => "CreateCategoryUsingEF";
+
         public void Execute(CategoryDto request)
         {
             if (Context.Categories.Any(c => c.Name == request.Name))

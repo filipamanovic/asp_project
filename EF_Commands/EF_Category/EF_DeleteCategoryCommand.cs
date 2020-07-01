@@ -10,6 +10,10 @@ namespace EF_Commands.EF_Category
     public class EF_DeleteCategoryCommand : EF_BaseEntity, IDeleteCategoryCommand
     {
         public EF_DeleteCategoryCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 20;
+        public string UseCaseName => "DeleteCategoryUsingEF";
+
         public void Execute(int request)
         {
             var category = Context.Categories.Find(request);

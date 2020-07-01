@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Application.Searches
 {
-    public class AdvertisementSearch
+    public class AdvertisementSearch : PagedSearch
     {
         public string Name { get; set; }
         public int? MinPrice { get; set; }
@@ -23,7 +23,5 @@ namespace Application.Searches
         public int? FuelId { get; set; }
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
-        public int CurrentPage { get; set; } = 1;
-        public int PerPage { get; set; } = 5;
     }
 }

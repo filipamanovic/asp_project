@@ -10,6 +10,10 @@ namespace EF_Commands.EF_Fuel
     public class EF_DeleteFuelCommand : EF_BaseEntity, IDeleteFuelCommand
     {
         public EF_DeleteFuelCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 25;
+        public string UseCaseName => "DeleteFuelUsingEF";
+
         public void Execute(int request)
         {
             var fuel = Context.Fuels.Find(request);

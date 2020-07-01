@@ -12,6 +12,10 @@ namespace EF_Commands.EF_Category
     public class EF_EditCategoryCommand : EF_BaseEntity, IEditCategoryCommand
     {
         public EF_EditCategoryCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 19;
+        public string UseCaseName => "EditCategoryUsingEF";
+
         public void Execute(CategoryDto request)
         {
             var category = Context.Categories.Find(request.Id);

@@ -14,6 +14,9 @@ namespace EF_Commands.EF_Fuel
     {
         public EF_GetFuelsCommand(asp_projectContext context) : base(context) { }
 
+        public int Id => 22;
+        public string UseCaseName => "GetFuelsUsingEF";
+
         public IEnumerable<FuelDto> Execute(FuelSearch request)
         {
             var query = Context.Fuels.AsQueryable();

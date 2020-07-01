@@ -1,7 +1,9 @@
 ﻿using Application.Commands.User;
 using Application.Dto.UserDtoData;
 using Application.Exceptions;
+using EF_Commands.Validators;
 using EF_DataAccess;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +13,23 @@ namespace EF_Commands.EF_User
 {
     public class EF_EditUserCommand : EF_BaseEntity, IEditUserCommand
     {
-        public EF_EditUserCommand(asp_projectContext context) : base(context)
+        private readonly EditUserValidator _editUserValidator;
+        public EF_EditUserCommand(asp_projectContext context, EditUserValidator validations) : base(context)
         {
+            _editUserValidator = validations;
         }
 
-        public void Execute(UserEdit request)
+        public int Id => 29;
+        public string UseCaseName => "EditUserUsingEF";
+
+        public void Execute(UserDto request)
         {
+            _editUserValidator.ValidateAndThrow(request);
             var user = Context.Users.Find(request.Id);
             if (user == null)
                 throw new EntityNotFoundException();
             if (user.IsDeleted == true)
                 throw new EntityAlreadyDeletedException();
-            if (user.Email != request.Email && request.Email != null)
-                if (Context.Users.Any(u => u.Email.ToLower() == request.Email.ToLower()))
-                    throw new EntityAlreadyExistException();
 
             if (request.FirstName != null)
                 user.FirstName = request.FirstName;

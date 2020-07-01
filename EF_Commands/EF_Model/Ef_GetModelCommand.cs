@@ -15,6 +15,9 @@ namespace EF_Commands.EF_Model
         {
         }
 
+        public int Id => 8;
+        public string UseCaseName => "GetModelUsingEF";
+
         public ModelDto Execute(int request)
         {
             var model = Context.Models.Find(request);

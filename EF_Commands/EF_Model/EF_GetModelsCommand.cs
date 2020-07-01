@@ -15,6 +15,9 @@ namespace EF_Commands.EF_Model
         {
         }
 
+        public int Id => 7;
+        public string UseCaseName => "GetModelsUsingEF";
+
         public IEnumerable<ModelDto> Execute(ModelSearch request)
         {
             var query = Context.Models.AsQueryable();

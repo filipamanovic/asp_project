@@ -12,6 +12,9 @@ namespace EF_Commands.EF_CarBody
     public class EF_EditCarBodyCommand : EF_BaseEntity, IEditCarBodyCommand
     {
         public EF_EditCarBodyCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 14;
+        public string UseCaseName => "EditCarBodyUsingEF";
         public void Execute(CarBodyDto request)
         {
             var carbody = Context.CarBodies.Find(request.Id);
@@ -25,7 +28,7 @@ namespace EF_Commands.EF_CarBody
             }
             if (carbody.Name != request.Name)
             {
-                if (Context.Fuels.Any(f => f.Name == request.Name))
+                if (Context.CarBodies.Any(f => f.Name == request.Name))
                 {
                     throw new EntityAlreadyExistException();
                 }

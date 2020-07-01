@@ -32,6 +32,9 @@ namespace Application.Dto.AdvertisementDto
         [Required]
         [Range(0, 2000000, ErrorMessage = "Km value range from 0 - 2000000")]
         public int KmValue { get; set; }
+        [Required]
+        [RegularExpression(@"^[A-z''-'+\s\d\.\,\*,ČĆŽŠĐčćžšđ]{2,50}$",
+                        ErrorMessage = "City format is not allowed.")]
         public string City { get; set; }
         [RegularExpression(@"^[1-9][\d]*$", ErrorMessage = "Model id is required")]
         public int ModelId { get; set; }

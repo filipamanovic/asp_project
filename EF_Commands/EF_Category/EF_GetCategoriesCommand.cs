@@ -12,6 +12,10 @@ namespace EF_Commands.EF_Category
     public class EF_GetCategoriesCommand : EF_BaseEntity, IGetCategoriesCommand
     {
         public EF_GetCategoriesCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 17;
+        public string UseCaseName => "GetCategoriesUsingEF";
+
         public IEnumerable<CategoryDto> Execute(CategorySearch request)
         {
             var query = Context.Categories.AsQueryable();

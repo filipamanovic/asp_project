@@ -14,6 +14,9 @@ namespace EF_Commands.EF_Brand
         {
         }
 
+        public int Id => 3;
+        public string UseCaseName => "GetBrandUsingEF";
+
         public BrandDto Execute(int request)
         {
             var brand = Context.Brands.Find(request);

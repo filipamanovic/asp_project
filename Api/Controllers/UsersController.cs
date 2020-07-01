@@ -6,6 +6,7 @@ using Application.Commands.FakeData;
 using Application.Commands.User;
 using Application.Dto.UserDtoData;
 using Application.Exceptions;
+using Application.Helpers;
 using Application.Searches;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,112 +18,50 @@ namespace Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly UseCaseExecutor _caseExecutor;
+
+        public UsersController(UseCaseExecutor caseExecutor)
+        {
+            _caseExecutor = caseExecutor;
+        }
+
         // GET: api/Users
-        [HttpGet]
+        [HttpGet] [Authorize]
         public IActionResult Get([FromQuery] UserSearch search, [FromServices] IGetUsersCommand _getUsers)
         {
-            try
-            {
-                var users = _getUsers.Execute(search);
-                return Ok(users);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal Server Error, getUsers: " + e.Message);
-            }
+            return Ok(_caseExecutor.ExecuteCommand(_getUsers, search));
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public IActionResult Get(int id, [FromServices] IGetUserCommand _getUser)
         {
-            try
-            {
-                var user = _getUser.Execute(id);
-                return Ok(user);
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, getUser: " + e.Message);
-            }
+            return Ok(_caseExecutor.ExecuteCommand(_getUser, id));
         }
 
         // POST: api/Users
         [HttpPost]
-        public IActionResult Post([FromBody] UserDto dto, [FromServices] IAddUserCommand _addUser)
-        { 
-            try
-            {
-                _addUser.Execute(dto);
-                return StatusCode(201);
-            }
-            catch (EntityAlreadyExistException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, addUser: " + e.Message);
-            }
+        public IActionResult Post([FromBody] UserDto dto, [FromServices] IRegisterUserCommand _registerUser)
+        {
+            _caseExecutor.ExecuteCommand(_registerUser, dto);
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UserEdit dto, [FromServices] IEditUserCommand _editUser)
+        public IActionResult Put(int id, [FromBody] UserDto dto, [FromServices] IEditUserCommand _editUser)
         {
-            try
-            {
-                dto.Id = id;
-                _editUser.Execute(dto);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return UnprocessableEntity(e.msg);
-            }
-            catch (EntityAlreadyExistException e)
-            {
-                return Conflict(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, editUser: " + e.Message);
-            }
+            dto.Id = id;
+            _caseExecutor.ExecuteCommand(_editUser, dto);
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteUserCommand _deleteUser)
         {
-            try
-            {
-                _deleteUser.Execute(id);
-                return NoContent();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (EntityAlreadyDeletedException e)
-            {
-                return NotFound(e.msg);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, "Internal server error, deleteUser: " + e.Message);
-            }
+            _caseExecutor.ExecuteCommand(_deleteUser, id);
+            return NoContent();
         }
     }
 }

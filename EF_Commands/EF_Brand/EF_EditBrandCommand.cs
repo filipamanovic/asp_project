@@ -15,6 +15,9 @@ namespace EF_Commands.EF_Brand
         {
         }
 
+        public int Id => 4;
+        public string UseCaseName => "EditBrandUsingEF";
+
         public void Execute(BrandDto request)
         {
             var brand = Context.Brands.Find(request.Id);
@@ -28,7 +31,7 @@ namespace EF_Commands.EF_Brand
             }
             if (brand.Name != request.Name && request.Name != null)
             {
-                if (Context.Fuels.Any(f => f.Name == request.Name))
+                if (Context.Brands.Any(f => f.Name == request.Name))
                 {
                     throw new EntityAlreadyExistException();
                 }

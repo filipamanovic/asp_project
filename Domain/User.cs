@@ -10,6 +10,8 @@ namespace Domain
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public ICollection<Advertisement> Advertisements { get; set; }
+        public ICollection<UserUseCase> UserUseCases { get; set; }
     }
 }

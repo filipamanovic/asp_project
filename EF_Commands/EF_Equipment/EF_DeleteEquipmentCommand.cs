@@ -13,6 +13,9 @@ namespace EF_Commands.EF_Equipment
         {
         }
 
+        public int Id => 35;
+        public string UseCaseName => "DeleteEquipmentUsingEF";
+
         public void Execute(int request)
         {
             var equipment = Context.CarEquipments.Find(request);

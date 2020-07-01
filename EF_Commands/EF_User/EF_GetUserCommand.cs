@@ -14,6 +14,9 @@ namespace EF_Commands.EF_User
         {
         }
 
+        public int Id => 28;
+        public string UseCaseName => "GetUserUsingEF";
+
         public UserDto Execute(int request)
         {
             var user = Context.Users.Find(request);
@@ -23,6 +26,7 @@ namespace EF_Commands.EF_User
                 throw new EntityAlreadyDeletedException();
             return new UserDto
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,

@@ -15,6 +15,9 @@ namespace EF_Commands.EF_Brand
         {
         }
 
+        public int Id => 2;
+        public string UseCaseName => "GetBrandsUsingEF";
+
         public IEnumerable<BrandDto> Execute(BrandSearch request)
         {
             var query = Context.Brands.AsQueryable();

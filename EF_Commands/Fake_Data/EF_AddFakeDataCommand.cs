@@ -15,6 +15,9 @@ namespace EF_Commands.Fake_Data
         {
         }
 
+        public int Id => 41;
+        public string UseCaseName => "AddFakeDataUsingEF";
+
         public void Execute()
         {
             var categories = new List<Category>();
@@ -101,15 +104,51 @@ namespace EF_Commands.Fake_Data
 
             var usersFaker = new Faker<User>();
 
+            List<int> allowedUseCases = new List<int> { 37, 38, 3, 2, 12, 13, 17, 18, 33, 32, 23, 22, 7, 8, 27, 28 };
+            List<UserUseCase> authorizedUseCases = new List<UserUseCase>();
+            foreach (var x in allowedUseCases)
+                authorizedUseCases.Add(new UserUseCase { UseCaseId = x });
+
             usersFaker.RuleFor(x => x.FirstName, f => f.Name.FirstName());
             usersFaker.RuleFor(x => x.LastName, f => f.Name.LastName());
             usersFaker.RuleFor(x => x.Email, f => f.Internet.Email());
             usersFaker.RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber());
+            usersFaker.RuleFor(x => x.Password, "WPuAkutdtisSBTQVlqBt1t+vBdxPGys9ru63/ktktR8=");
 
-            var users = usersFaker.Generate(50);
+            var users = usersFaker.Generate(20);
             users = users.GroupBy(u => u.Email).Select(u => u.First()).ToList();
 
             Context.Users.AddRange(users);
+            Context.SaveChanges();
+
+            foreach (var x in Context.Users)
+            {
+                foreach(var y in authorizedUseCases)
+                {
+                    Context.UserUseCases.Add(new UserUseCase
+                    {
+                        User = x,
+                        UseCaseId = y.UseCaseId
+                    });
+                    
+                }
+            }
+
+            List<UserUseCase> authorizedUseCasesAdmin = new List<UserUseCase>();
+            foreach (var x in Enumerable.Range(1, 50))
+                authorizedUseCasesAdmin.Add(new UserUseCase { UseCaseId = x });
+
+            Context.Users.Add(new User
+            {
+                FirstName = "Admin",
+                LastName = "Adminovic",
+                Email = "admin@gmail.com",
+                Password = "WPuAkutdtisSBTQVlqBt1t+vBdxPGys9ru63/ktktR8=", //sifra123
+                PhoneNumber = "065123456",
+                UserUseCases = authorizedUseCasesAdmin
+
+            });
+          
 
             var brandsFaker = new Faker<Brand>();
 

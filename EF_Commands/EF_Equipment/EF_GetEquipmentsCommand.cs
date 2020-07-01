@@ -16,6 +16,9 @@ namespace EF_Commands.EF_Equipment
         {
         }
 
+        public int Id => 32;
+        public string UseCaseName => "GetEquipmentsUsingEF";
+
         public IEnumerable<EquipmentDto> Execute(EquipmentSearch request)
         {
             var query = Context.CarEquipments.AsQueryable();

@@ -14,12 +14,15 @@ namespace EF_Commands.EF_Model
     {
         public EF_AddModelCommand(asp_projectContext context) : base(context) {}
 
+        public int Id => 6;
+        public string UseCaseName => "CreateModelUsingEF";
+
         public void Execute(ModelDto request)
         {
             if (Context.Models.Any(m => m.Name.ToLower() == request.Name.ToLower()))
                 throw new EntityAlreadyExistException();
             if (!Context.Brands.Any(b => b.Id == request.BrandId))
-                throw new ForeinKeyNotFoundException("Brand");
+                throw new ForeignKeyNotFoundException("Brand");
             Context.Models.Add(new Model
             {
                 Name = request.Name,

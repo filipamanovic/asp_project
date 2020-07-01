@@ -17,6 +17,9 @@ namespace EF_Commands.EF_Advertisement
         {
         }
 
+        public int Id => 38;
+        public string UseCaseName => "GetAdvertisementUsingEF";
+
         public AdvertisementShow Execute(int request)
         {
             var advertisement = Context.Advertisements.Find(request);

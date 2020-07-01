@@ -294,6 +294,33 @@ namespace EF_DataAccess.Migrations
                     b.ToTable("Models");
                 });
 
+            modelBuilder.Entity("Domain.UseCaseLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Actor");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Data");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedAt");
+
+                    b.Property<int>("Timestamp");
+
+                    b.Property<string>("UseCaseName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UseCaseLogs");
+                });
+
             modelBuilder.Entity("Domain.User", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +347,9 @@ namespace EF_DataAccess.Migrations
 
                     b.Property<DateTime?>("ModifiedAt");
 
+                    b.Property<string>("Password")
+                        .IsRequired();
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(30);
@@ -330,6 +360,31 @@ namespace EF_DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.UserUseCase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedAt");
+
+                    b.Property<int>("UseCaseId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserUseCases");
                 });
 
             modelBuilder.Entity("Domain.Advertisement", b =>
@@ -387,6 +442,14 @@ namespace EF_DataAccess.Migrations
                         .WithMany("Models")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Domain.UserUseCase", b =>
+                {
+                    b.HasOne("Domain.User", "User")
+                        .WithMany("UserUseCases")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

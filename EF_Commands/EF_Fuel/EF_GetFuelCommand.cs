@@ -11,6 +11,10 @@ namespace EF_Commands.EF_Fuel
     public class EF_GetFuelCommand : EF_BaseEntity, IGetFuelCommand
     {
         public EF_GetFuelCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 23;
+        public string UseCaseName => "GetFuelUsingEF";
+
         public FuelDto Execute(int request)
         {
             var fuel = Context.Fuels.Find(request);

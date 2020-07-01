@@ -17,6 +17,9 @@ namespace EF_Commands.EF_Advertisement
         {
         }
 
+        public int Id => 37;
+        public string UseCaseName => "GetAdvertisementsUsingEF";
+
         public PageResponse<AdvertisementShow> Execute(AdvertisementSearch request)
         {
             var query = Context.Advertisements.AsQueryable();
@@ -69,6 +72,7 @@ namespace EF_Commands.EF_Advertisement
                 CurrentPage = request.CurrentPage,
                 PageCount = pagesCount,
                 TotalCount = totalCount,
+                ItemsPerPage = request.PerPage, 
                 Data = query.Select(a => new AdvertisementShow
                 {
                     AdName = a.AdName,

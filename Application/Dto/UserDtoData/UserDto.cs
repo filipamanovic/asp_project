@@ -7,17 +7,11 @@ namespace Application.Dto.UserDtoData
 {
     public class UserDto
     {
-        [RegularExpression(@"^[A-Z][a-z]{2,30}$",
-         ErrorMessage = "User FirstName format is not allowed.")]
-        [Required]
+        public int Id { get; set; }
         public string FirstName { get; set; }
-        [RegularExpression(@"^[A-Z][a-z]{2,30}$",
-         ErrorMessage = "User LastName format is not allowed.")]
-        [Required]
         public string LastName { get; set; }
-        [Required]
         public string PhoneNumber { get; set; }
-        [EmailAddress]
         public string Email { get; set; }
+        public string Password  { get; set; }
     }
 }

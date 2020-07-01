@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Application.Searches
 {
-    public class UserSearch
+    public class UserSearch : PagedSearch
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

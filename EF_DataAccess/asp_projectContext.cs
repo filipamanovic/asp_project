@@ -16,13 +16,19 @@ namespace EF_DataAccess
         public DbSet<Fuel> Fuels { get; set; }
         public DbSet<CarBody> CarBodies { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<UserUseCase> UserUseCases { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<CarEquipment> CarEquipments { get; set; }
+        public DbSet<UseCaseLog> UseCaseLogs { get; set; }
+  
+
+        //public asp_projectContext(DbContextOptions<asp_projectContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_projetv2;Integrated Security=True");
             //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project;Integrated Security=True");
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project_faker;Integrated Security=True");
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-CF3GPEA\SQLEXPRESS;Initial Catalog=asp_project_faker;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

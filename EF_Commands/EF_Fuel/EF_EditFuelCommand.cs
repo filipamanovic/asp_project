@@ -12,6 +12,10 @@ namespace EF_Commands.EF_Fuel
     public class EF_EditFuelCommand : EF_BaseEntity, IEditFuelCommand
     {
         public EF_EditFuelCommand(asp_projectContext context) : base(context) { }
+
+        public int Id => 24;
+        public string UseCaseName => "EditFuelUsingEF";
+
         public void Execute(FuelDto request)
         {
             var fuel = Context.Fuels.Find(request.Id);

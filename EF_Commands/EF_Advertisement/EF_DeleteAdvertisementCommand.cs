@@ -13,6 +13,9 @@ namespace EF_Commands.EF_Advertisement
         {
         }
 
+        public int Id => 40;
+        public string UseCaseName => "DeleteAdvertisementUsingEF";
+
         public void Execute(int request)
         {
             var advertisement = Context.Advertisements.Find(request);

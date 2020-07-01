@@ -17,20 +17,23 @@ namespace EF_Commands.EF_Advertisement
         {
         }
 
+        public int Id => 36;
+        public string UseCaseName => "CreateAdvertisementUsingEF";
+
         public void Execute(AdvertisementDto request)
         {
             if (Context.Advertisements.Any(a => a.AdName.ToLower() == request.AdName.ToLower()))
                 throw new EntityAlreadyExistException();
             if (!Context.Models.Any(m => m.Id == request.ModelId))
-                throw new ForeinKeyNotFoundException("Model");
+                throw new ForeignKeyNotFoundException("Model");
             if (!Context.CarBodies.Any(cb => cb.Id == request.CarBodyId))
-                throw new ForeinKeyNotFoundException("CarBody");
+                throw new ForeignKeyNotFoundException("CarBody");
             if (!Context.Fuels.Any(f => f.Id == request.FuelId))
-                throw new ForeinKeyNotFoundException("Fuel");
+                throw new ForeignKeyNotFoundException("Fuel");
             if (!Context.Categories.Any(c => c.Id == request.CategoryId))
-                throw new ForeinKeyNotFoundException("Category");
+                throw new ForeignKeyNotFoundException("Category");
             if (!Context.Users.Any(u => u.Id == request.UserId))
-                throw new ForeinKeyNotFoundException("User");
+                throw new ForeignKeyNotFoundException("User");
 
             List<CarEquipmentAd> carEquipment = new List<CarEquipmentAd>();
             if (request.CarEquipments != null) 
@@ -40,7 +43,7 @@ namespace EF_Commands.EF_Advertisement
                 foreach(var x in request.CarEquipments)
                 {
                     if (!Context.CarEquipments.Any(ce => ce.Id == x))
-                        throw new ForeinKeyNotFoundException("Car equipment");
+                        throw new ForeignKeyNotFoundException("Car equipment");
 
                     carEquipment.Add(new CarEquipmentAd
                     {

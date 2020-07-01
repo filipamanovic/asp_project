@@ -13,6 +13,9 @@ namespace EF_Commands.EF_Model
         {
         }
 
+        public int Id => 10;
+        public string UseCaseName => "DeleteModelUsingEF";
+
         public void Execute(int request)
         {
             var model = Context.Models.Find(request);

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Application.Helpers
 {
-    public class ImageUpload
+    public static class ImageUpload
     {
         public static IEnumerable<string> AllowedExtensions => new List<string> { ".jpeg", ".jpg", ".png", ".gif" };
 

@@ -15,6 +15,9 @@ namespace EF_Commands.EF_Equipment
         {
         }
 
+        public int Id => 34;
+        public string UseCaseName => "EditEquipmentUsingEF";
+
         public void Execute(EquipmentDto request)
         {
             var equipment = Context.CarEquipments.Find(request.Id);
