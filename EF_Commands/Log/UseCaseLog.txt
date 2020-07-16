@@ -1,0 +1,40 @@
+
+User: Test Api User, executed command Get Equipments using EF at 6/7/2020 5:44:03 PM
+User: Test Api User, executed command Get Advertisements using EF at 6/7/2020 5:44:13 PM
+User: Test Api User, executed command Get Advertisements using EF at 6/7/2020 5:44:37 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 5:45:32 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 6:54:46 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 6:55:01 PM
+User: Test Api User, executed command Get Advertisements using EF at 6/7/2020 6:55:06 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:01:07 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:03:09 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:12:38 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:13:17 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:20:32 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:20:45 PM
+User: Test Api User, executed command Get User using EF at 6/7/2020 7:20:55 PM
+User: Test Api User, executed command Get User using EF at 6/7/2020 7:41:37 PM
+User: Test Api User, executed command Get Advertisements using EF at 6/7/2020 7:42:00 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 7:44:22 PM
+User: Test Api User, executed command Get Users using EF at 6/7/2020 8:02:48 PM
+User: paja.patak@gmail.com, executed command Get Advertisements using EF at 6/7/2020 8:40:18 PM
+User: paja.patak@gmail.com, executed command Get Users using EF at 6/22/2020 3:00:10 PM
+User: paja.patak@gmail.com, executed command Get Users using EF at 6/22/2020 3:07:05 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:27:32 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:31:08 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:32:42 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:33:29 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:33:49 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:34:14 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 7:36:22 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 8:03:20 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 8:03:34 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 8:03:40 PM
+User: Unauthorized, executed command Register User using EF at 6/22/2020 8:03:44 PM
+User: maza@gmail.com, executed command Register User using EF at 6/22/2020 9:08:01 PM
+User: maza@gmail.com, executed command Get Users using EF at 6/22/2020 9:08:06 PM
+User: Unauthorized, executed command Get Advertisements using EF at 6/22/2020 9:08:14 PM
+User: maza@gmail.com, executed command Get Advertisements using EF at 6/22/2020 9:08:48 PM
+User: maza@gmail.com, executed command Get CarBodies using EF at 6/22/2020 9:08:57 PM
+User: maza@gmail.com, executed command Get CarBodies using EF at 6/23/2020 10:56:58 AM
+User: maza@gmail.com, executed command Get Advertisements using EF at 6/23/2020 10:57:05 AM
